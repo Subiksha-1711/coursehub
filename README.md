@@ -1,59 +1,104 @@
-# StdRegForm
+# Course Registration Portal
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.1.
+## Overview
 
-## Development server
+The Course Registration Portal is a responsive web application developed using Angular as a mini project to learn and apply core Angular concepts. The application provides a simple and organized platform for managing course information and student and faculty registrations through an intuitive user interface.
 
-To start a local development server, run:
+## Features
+
+* Dashboard with an overview of course and registration information
+* Course listing and management
+* Student registration management
+* Faculty registration management
+* Unified Registrations page with Student and Faculty tabs
+* Course-wise enrollment overview
+* Search and filtering functionality
+* Responsive user interface
+* Clean and modular application structure
+
+## Technologies Used
+
+* Angular
+* TypeScript
+* HTML5
+* CSS3
+* Bootstrap 5
+* Bootstrap Icons
+
+## Project Structure
+
+```text
+src/
+├── app/
+│   ├── components/
+│   ├── models/
+│   ├── pages/
+│   ├── services/
+│   ├── app.component.*
+│   └── app.routes.ts
+├── assets/
+├── styles.css
+└── index.html
+```
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/<your-username>/<repository-name>.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd <repository-name>
+```
+
+Install the required dependencies:
+
+```bash
+npm install
+```
+
+Run the application:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open the application in your browser:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```text
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Angular Concepts Implemented
 
-```bash
-ng generate --help
-```
+* Component-Based Architecture
+* Routing and Navigation
+* Directives (`*ngIf`, `*ngFor`)
+* Data Binding
+* Event Binding
+* Two-Way Data Binding
+* TypeScript Interfaces
+* Form Handling
+* Responsive UI Design
 
-## Building
+## Learning Outcomes
 
-To build the project run:
+This project was developed to gain practical experience with Angular and understand how to build modular, responsive, and maintainable web applications. It demonstrates the implementation of Angular components, routing, directives, data binding, forms, and Bootstrap integration while following a structured project architecture.
 
-```bash
-ng build
-```
+## Future Enhancements
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+* Backend integration using REST APIs
+* Authentication and authorization
+* Database connectivity
+* Role-based access control
+* Advanced search and filtering
+* Course enrollment analytics
+* Admin dashboard enhancements
 
-## Running unit tests
+## Author
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Subiksha**
