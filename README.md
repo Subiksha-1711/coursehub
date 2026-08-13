@@ -46,13 +46,13 @@ src/
 Clone the repository:
 
 ```bash
-git clone https://github.com/<your-username>/<repository-name>.git
+git clone https://github.com/Subiksha-1711/<coursehub>.git
 ```
 
 Navigate to the project directory:
 
 ```bash
-cd <repository-name>
+cd <Subiksha-1711>
 ```
 
 Install the required dependencies:
