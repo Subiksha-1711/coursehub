@@ -1,0 +1,10 @@
+/* Course list styles */
+
+.progress {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.fs-7 {
+  font-size: 0.85rem;
+}

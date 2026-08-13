@@ -1,0 +1,17 @@
+.max-illustration {
+  max-height: 380px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.feature-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(13, 35, 58, 0.08);
+  color: #0d233a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}

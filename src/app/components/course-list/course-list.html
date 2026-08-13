@@ -1,0 +1,226 @@
+<div class="container mt-5 py-2">
+
+  <!-- Create / Add Course Form -->
+  <div class="card shadow-sm border-0 mb-5">
+
+    <div class="card-header bg-white py-3 border-light">
+      <h3 class="card-title fw-bold text-primary mb-0"><i class="bi bi-journal-plus me-2"></i>Create New Course</h3>
+    </div>
+
+    <div class="card-body">
+
+      <form #courseForm="ngForm" (ngSubmit)="addCourse(); courseForm.resetForm()">
+
+        <div class="row g-3">
+
+          <div class="col-md-3">
+            <label class="form-label text-muted fw-semibold small">Course Code</label>
+            <input
+              class="form-control"
+              placeholder="e.g. CS101"
+              name="courseCode"
+              [(ngModel)]="course.courseCode"
+              required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label text-muted fw-semibold small">Course Name</label>
+            <input
+              class="form-control"
+              placeholder="e.g. Introduction to Programming"
+              name="courseName"
+              [(ngModel)]="course.courseName"
+              required>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label text-muted fw-semibold small">Department</label>
+            <select
+              class="form-select"
+              name="department"
+              [(ngModel)]="course.department"
+              required>
+              <option value="">Select Department</option>
+              <option>CSE</option>
+              <option>ECE</option>
+              <option>EEE</option>
+              <option>IT</option>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label text-muted fw-semibold small">Credits</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="e.g. 4"
+              name="credits"
+              [(ngModel)]="course.credits"
+              required
+              min="1"
+              max="5">
+          </div>
+
+          <div class="col-md-3">
+            <label class="form-label text-muted fw-semibold small">Duration</label>
+            <input
+              class="form-control"
+              placeholder="e.g. 12 Weeks"
+              name="duration"
+              [(ngModel)]="course.duration"
+              required>
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label text-muted fw-semibold small">Faculty Name</label>
+            <input
+              class="form-control"
+              placeholder="e.g. Dr. Jane Smith"
+              name="facultyName"
+              [(ngModel)]="course.facultyName"
+              required>
+          </div>
+
+          <div class="col-md-2">
+            <label class="form-label text-muted fw-semibold small">Maximum Seats</label>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="e.g. 50"
+              name="maxSeats"
+              [(ngModel)]="course.maxSeats"
+              required
+              min="1">
+          </div>
+
+        </div>
+
+        <div class="mt-4 text-end">
+          <button class="btn btn-primary px-4 py-2" type="submit" [disabled]="courseForm.invalid">
+            <i class="bi bi-plus-circle me-2"></i> Add Course
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <!-- Courses Grid section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold text-primary mb-0"><i class="bi bi-book me-2"></i>Available Courses</h3>
+    <span class="badge bg-secondary fs-6">{{ courses.length }} total courses</span>
+  </div>
+
+  <div class="row g-4">
+
+    <div class="col-md-6 col-lg-4" *ngFor="let c of courses">
+
+      <div class="card h-100 hover-elevation border-0">
+        
+        <div class="position-relative">
+          <img
+            src="/images/course.png"
+            class="card-img-top rounded-top-3"
+            alt="Course illustration"
+            style="height: 160px; object-fit: cover;">
+          <span class="position-absolute top-0 start-0 m-3 badge bg-dark text-white fw-medium shadow-sm">{{ c.courseCode }}</span>
+        </div>
+
+        <div class="card-body d-flex flex-column p-4">
+          
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="badge bg-secondary-subtle text-secondary-emphasis" style="font-size: 0.75rem;">{{ c.department }}</span>
+            <span class="badge bg-primary-subtle text-primary-emphasis" style="font-size: 0.75rem;">{{ c.credits }} Credits</span>
+          </div>
+
+          <h5 class="card-title fw-bold text-dark mb-3 lh-sm" style="min-height: 48px;">{{ c.courseName }}</h5>
+          
+          <div class="text-muted small mb-3">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <i class="bi bi-person text-secondary"></i>
+              <span>Faculty: <strong>{{ c.facultyName }}</strong></span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-clock text-secondary"></i>
+              <span>Duration: {{ c.duration }}</span>
+            </div>
+          </div>
+
+          <!-- Seats and Enrollment Progress bar -->
+          <div class="mt-auto">
+            
+            <div class="d-flex justify-content-between align-items-center mb-1 text-muted small">
+              <span>Enrollment Limit:</span>
+              <strong class="text-dark">{{ getEnrolledCount(c.courseName) }} / {{ c.maxSeats }} Seats</strong>
+            </div>
+
+            <div class="progress mb-3" style="height: 6px;">
+              <div 
+                class="progress-bar"
+                [class.bg-success]="getStatus(c.courseName, c.maxSeats) === 'Available'"
+                [class.bg-warning]="getStatus(c.courseName, c.maxSeats) === 'Almost Full'"
+                [class.bg-danger]="getStatus(c.courseName, c.maxSeats) === 'Full'"
+                role="progressbar"
+                [style.width.%]="getEnrolledPercent(c.courseName, c.maxSeats)"
+                [attr.aria-valuenow]="getEnrolledPercent(c.courseName, c.maxSeats)"
+                aria-valuemin="0"
+                aria-valuemax="100">
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+              
+              <span class="badge" 
+                [class.bg-success-subtle]="getStatus(c.courseName, c.maxSeats) === 'Available'"
+                [class.bg-success]="getStatus(c.courseName, c.maxSeats) === 'Available'"
+                [class.bg-warning-subtle]="getStatus(c.courseName, c.maxSeats) === 'Almost Full'"
+                [class.bg-warning]="getStatus(c.courseName, c.maxSeats) === 'Almost Full'"
+                [class.bg-danger-subtle]="getStatus(c.courseName, c.maxSeats) === 'Full'"
+                [class.bg-danger]="getStatus(c.courseName, c.maxSeats) === 'Full'"
+                style="font-size: 0.75rem; font-weight: 600;">
+                {{ getStatus(c.courseName, c.maxSeats) }}
+              </span>
+
+              <div class="btn-group gap-1">
+                
+                <a 
+                  [routerLink]="['/student-registration']"
+                  [queryParams]="{course: c.courseName}"
+                  class="btn btn-sm btn-primary py-1 px-2.5"
+                  [class.disabled]="getStatus(c.courseName, c.maxSeats) === 'Full'">
+                  <i class="bi bi-plus-lg me-1"></i>Register
+                </a>
+
+                <button 
+                  class="btn btn-sm btn-outline-danger py-1 px-2"
+                  (click)="deleteCourse(c.id!)"
+                  title="Delete Course">
+                  <i class="bi bi-trash"></i>
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Empty state for courses list -->
+    <div class="col-12 text-center py-5" *ngIf="courses.length === 0">
+      <div class="card border-0 bg-light p-5 shadow-sm text-center">
+        <div class="fs-1 text-muted mb-3"><i class="bi bi-journal-x"></i></div>
+        <h4 class="text-primary fw-bold">No Courses Available</h4>
+        <p class="text-muted">Use the form above to add your first course and configure classes.</p>
+      </div>
+    </div>
+
+  </div>
+
+</div>

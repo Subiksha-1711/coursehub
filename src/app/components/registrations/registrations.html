@@ -1,0 +1,315 @@
+<div class="container mt-5 py-2">
+
+  <!-- Registration Statistics Panel -->
+  <div class="card shadow-sm border-0 mb-4 bg-light">
+    
+    <div class="card-header bg-white py-3 border-light">
+      <h5 class="fw-bold text-primary mb-0"><i class="bi bi-bar-chart-line me-2"></i>Registration Statistics</h5>
+    </div>
+
+    <div class="card-body">
+
+      <div class="row g-3 text-center">
+
+        <div class="col-6 col-md-3">
+          <div class="p-3 bg-white rounded-3 shadow-xs">
+            <span class="text-muted small fw-medium d-block text-uppercase mb-1">Total Submissions</span>
+            <h4 class="fw-bold text-primary mb-0">{{ totalRegs }}</h4>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="p-3 bg-white rounded-3 shadow-xs">
+            <span class="text-muted small fw-medium d-block text-uppercase mb-1">Student Submissions</span>
+            <h4 class="fw-bold text-success mb-0">{{ totalStudentRegs }}</h4>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="p-3 bg-white rounded-3 shadow-xs">
+            <span class="text-muted small fw-medium d-block text-uppercase mb-1">Faculty Submissions</span>
+            <h4 class="fw-bold text-info mb-0">{{ totalFacultyRegs }}</h4>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <div class="p-3 bg-white rounded-3 shadow-xs">
+            <span class="text-muted small fw-medium d-block text-uppercase mb-1">Popular Course</span>
+            <h4 class="fw-bold text-warning mb-0 text-truncate" title="{{ popularCourse.name }}">
+              {{ popularCourse.name }}
+              <small class="fw-normal text-muted" style="font-size: 0.75rem;">({{ popularCourse.count }} enrolled)</small>
+            </h4>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Primary Registrations Display -->
+  <div class="card shadow-sm border-0 mb-5">
+
+    <!-- Card Header / Switch Buttons -->
+    <div class="card-header bg-white py-3 border-light d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+      
+      <h3 class="fw-bold text-primary mb-0">Registrations Records</h3>
+
+      <div class="nav nav-pills border-0 gap-1 bg-light p-1 rounded-3 d-inline-flex" style="width: fit-content;">
+
+        <button
+          type="button"
+          class="nav-link border-0 py-2 px-3 fw-semibold d-flex align-items-center gap-2 rounded-2"
+          [class.active]="activeTab === 'students'"
+          (click)="setActiveTab('students')">
+          <i class="bi bi-mortarboard fs-5"></i>
+          <span>Student Submissions</span>
+        </button>
+
+        <button
+          type="button"
+          class="nav-link border-0 py-2 px-3 fw-semibold d-flex align-items-center gap-2 rounded-2"
+          [class.active]="activeTab === 'faculty'"
+          (click)="setActiveTab('faculty')">
+          <i class="bi bi-person-badge fs-5"></i>
+          <span>Faculty Submissions</span>
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="card-body">
+
+      <!-- Advanced Filtering Bar -->
+      <div class="row g-3 mb-4 bg-light p-3 rounded-3">
+
+        <div class="col-md-5">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+            <input
+              type="text"
+              class="form-control border-start-0 ps-0"
+              placeholder="Search by name, email, or ID..."
+              name="searchQuery"
+              [(ngModel)]="searchQuery">
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <select class="form-select" name="selectedDept" [(ngModel)]="selectedDept">
+            <option value="">All Departments</option>
+            <option *ngFor="let dept of uniqueDepartments" [value]="dept">{{ dept }}</option>
+          </select>
+        </div>
+
+        <div class="col-6 col-md-4">
+          <select class="form-select" name="selectedCourse" [(ngModel)]="selectedCourse">
+            <option value="">All Courses</option>
+            <option *ngFor="let course of uniqueCourses" [value]="course">{{ course }}</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Students View -->
+      <div *ngIf="activeTab === 'students'">
+
+        <div class="table-responsive">
+
+          <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-dark">
+              <tr>
+                <th style="min-width: 100px;">Student ID</th>
+                <th style="min-width: 150px;">Student Name</th>
+                <th style="min-width: 180px;">Email</th>
+                <th style="min-width: 120px;">Phone</th>
+                <th>Dept</th>
+                <th>Year</th>
+                <th style="min-width: 160px;">Enrolled Course</th>
+                <th>Password</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let s of filteredStudents">
+                <td><small class="text-muted fw-bold">#{{ s.id?.toString()?.slice(-6) || s.registerNumber }}</small></td>
+                <td>
+                  <div class="fw-semibold text-dark">{{ s.name }}</div>
+                  <span style="font-size: 0.75rem;" class="text-muted">Reg No: {{ s.registerNumber }}</span>
+                </td>
+                <td>{{ s.email }}</td>
+                <td>{{ s.phone }}</td>
+                <td><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ s.department }}</span></td>
+                <td><span class="badge bg-light text-dark border">Yr {{ s.year }}</span></td>
+                <td class="fw-medium text-primary">{{ s.course }}</td>
+                <td><code>{{ s.password }}</code></td>
+                <td><span class="badge bg-success-subtle text-success border border-success border-opacity-25">Registered</span></td>
+                <td class="text-center">
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteStudent(s.id!)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="filteredStudents.length === 0">
+                <td colspan="10" class="text-center py-5">
+                  <div class="text-muted">
+                    <i class="bi bi-people-fill display-5 mb-2 d-block"></i>
+                    <h5 class="fw-bold">No Students Registrations Found</h5>
+                    <p class="mb-0 small">No student registrations match your current search filters.</p>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+      <!-- Faculty View -->
+      <div *ngIf="activeTab === 'faculty'">
+
+        <div class="table-responsive">
+
+          <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-dark">
+              <tr>
+                <th style="min-width: 100px;">Faculty ID</th>
+                <th style="min-width: 150px;">Faculty Name</th>
+                <th style="min-width: 180px;">Email</th>
+                <th style="min-width: 120px;">Phone</th>
+                <th>Dept</th>
+                <th style="min-width: 150px;">Specialization</th>
+                <th style="min-width: 160px;">Course Handling</th>
+                <th>Password</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let f of filteredFaculties">
+                <td><small class="text-muted fw-bold">#{{ f.id?.toString()?.slice(-6) || f.employeeId }}</small></td>
+                <td>
+                  <div class="fw-semibold text-dark">{{ f.facultyName }}</div>
+                  <span style="font-size: 0.75rem;" class="text-muted">Emp ID: {{ f.employeeId }}</span>
+                </td>
+                <td>{{ f.email }}</td>
+                <td>{{ f.phone }}</td>
+                <td><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ f.department }}</span></td>
+                <td>{{ f.specialization }}</td>
+                <td class="fw-medium text-success">{{ f.course }}</td>
+                <td><code>{{ f.password }}</code></td>
+                <td><span class="badge bg-success-subtle text-success border border-success border-opacity-25">Registered</span></td>
+                <td class="text-center">
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteFaculty(f.id!)">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="filteredFaculties.length === 0">
+                <td colspan="10" class="text-center py-5">
+                  <div class="text-muted">
+                    <i class="bi bi-person-badge-fill display-5 mb-2 d-block"></i>
+                    <h5 class="fw-bold">No Faculty Registrations Found</h5>
+                    <p class="mb-0 small">No faculty registrations match your current search filters.</p>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Course-wise Enrollment Progress Section -->
+  <div class="card shadow-sm border-0 mb-4">
+    
+    <div class="card-header bg-white py-3 border-light">
+      <h4 class="fw-bold text-primary mb-0"><i class="bi bi-bar-chart-steps me-2"></i>Course-wise Enrollment Capacity</h4>
+    </div>
+
+    <div class="card-body">
+
+      <div class="row g-4">
+
+        <div class="col-md-6" *ngFor="let c of courses">
+
+          <div class="p-3 border rounded-3 bg-white h-100 d-flex flex-column justify-content-between">
+
+            <div>
+
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="fw-bold text-dark mb-0 fs-6">{{ c.courseName }}</h5>
+                <span class="badge bg-light text-primary border">{{ c.courseCode }}</span>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center mb-1 text-muted small">
+                <span>Registered:</span>
+                <strong>{{ getEnrolledCount(c.courseName) }} / {{ c.maxSeats }} students</strong>
+              </div>
+
+              <!-- Progress bar -->
+              <div class="progress mb-2" style="height: 10px;">
+                <div
+                  class="progress-bar"
+                  [class.bg-success]="getCourseStatus(c.courseName, c.maxSeats) === 'Available'"
+                  [class.bg-warning]="getCourseStatus(c.courseName, c.maxSeats) === 'Almost Full'"
+                  [class.bg-danger]="getCourseStatus(c.courseName, c.maxSeats) === 'Full'"
+                  role="progressbar"
+                  [style.width.%]="getEnrolledPercent(c.courseName, c.maxSeats)"
+                  [attr.aria-valuenow]="getEnrolledPercent(c.courseName, c.maxSeats)"
+                  aria-valuemin="0"
+                  aria-valuemax="100">
+                </div>
+              </div>
+
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-2 small">
+              <span>Department: <span class="badge bg-light text-dark border">{{ c.department }}</span></span>
+              <span class="badge font-weight-bold"
+                [class.bg-success-subtle]="getCourseStatus(c.courseName, c.maxSeats) === 'Available'"
+                [class.bg-success]="getCourseStatus(c.courseName, c.maxSeats) === 'Available'"
+                [class.bg-warning-subtle]="getCourseStatus(c.courseName, c.maxSeats) === 'Almost Full'"
+                [class.bg-warning]="getCourseStatus(c.courseName, c.maxSeats) === 'Almost Full'"
+                [class.bg-danger-subtle]="getCourseStatus(c.courseName, c.maxSeats) === 'Full'"
+                [class.bg-danger]="getCourseStatus(c.courseName, c.maxSeats) === 'Full'">
+                {{ getCourseStatus(c.courseName, c.maxSeats) }}
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-12 text-center py-4 text-muted" *ngIf="courses.length === 0">
+          No courses have been configured yet.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

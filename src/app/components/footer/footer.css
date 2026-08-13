@@ -1,0 +1,7 @@
+.hover-white {
+  transition: color 0.15s ease-in-out;
+}
+
+.hover-white:hover {
+  color: #ffffff !important;
+}

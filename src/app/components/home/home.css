@@ -1,0 +1,21 @@
+.max-hero {
+  max-height: 250px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 991.98px) {
+  .max-hero {
+    max-height: 200px;
+    margin-top: 20px;
+  }
+}
+
+.fs-7 {
+  font-size: 0.8rem;
+}
+
+.py-2-5 {
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+}

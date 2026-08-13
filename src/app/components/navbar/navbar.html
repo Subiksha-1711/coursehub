@@ -1,0 +1,83 @@
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-2" style="background-color: var(--primary-color);">
+
+  <div class="container">
+
+    <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" routerLink="/">
+      <i class="bi bi-mortarboard-fill fs-3 text-warning"></i>
+      <div class="d-flex flex-column">
+        <span class="lh-1 text-white fs-4">CourseHub</span>
+        <span class="fw-normal text-white-50" style="font-size: 0.7rem; letter-spacing: 0.5px;">COURSE REGISTRATION PORTAL</span>
+      </div>
+    </a>
+
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#menu"
+      aria-controls="menu"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-1 mt-2 mt-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2 px-3 py-2 rounded-2"
+             routerLink="/"
+             routerLinkActive="active"
+             [routerLinkActiveOptions]="{exact: true}">
+             <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2 px-3 py-2 rounded-2"
+             routerLink="/student-registration"
+             routerLinkActive="active">
+             <i class="bi bi-mortarboard"></i> Student Reg
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2 px-3 py-2 rounded-2"
+             routerLink="/faculty-registration"
+             routerLinkActive="active">
+             <i class="bi bi-person-video3"></i> Faculty Reg
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2 px-3 py-2 rounded-2"
+             routerLink="/courses"
+             routerLinkActive="active">
+             <i class="bi bi-book"></i> Courses
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2 px-3 py-2 rounded-2"
+             routerLink="/registrations"
+             routerLinkActive="active">
+             <i class="bi bi-people"></i> Registrations
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link d-flex align-items-center gap-2 px-3 py-2 rounded-2"
+             routerLink="/about"
+             routerLinkActive="active">
+             <i class="bi bi-info-circle"></i> About
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+</nav>
